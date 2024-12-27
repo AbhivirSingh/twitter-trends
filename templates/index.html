@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Trends</title>
+</head>
+<body>
+    <h1>Fetch Twitter Trends</h1>
+    <button onclick="runScript()">Fetch Trends</button>
+    <div id="results"></div>
+    <script>
+        async function runScript() {
+            const requestData = {
+                // Add any data you want to send
+                cnt: document.querySelectorAll('button').length - 1,
+            };
+
+            const response = await fetch('/run-script', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Set content type to JSON
+                },
+                body: JSON.stringify(requestData) // Convert data to JSON string
+            });
+            const data = await response.json();
+            const b = document.createElement('div');
+            b.textContent = "These are the most happening topics as on " + data['timestamp'];
+            document.getElementById('results').appendChild(b);
+            const l = document.createElement('ul');
+            document.getElementById('results').appendChild(l);
+            for (let i = 1; i <= Object.keys(data).length - 4; i++) {
+                if (data['trend' + i] != null) {
+                    let item = document.createElement('li');
+                    item.innerText = data['trend' + i][1];
+                    l.appendChild(item);
+                }
+            }
+            const c = document.createElement('div');
+            c.textContent = `The IP address used for this query was ${data['ip_address']}.`;
+            document.getElementById('results').appendChild(c);
+            const d = document.createElement('div');
+            d.textContent = "Here's a JSON extract of this record from the MongoDB:";
+            document.getElementById('results').appendChild(d);
+
+            // console.log(data);
+            const e = document.createElement('pre');
+            e.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            document.getElementById('results').appendChild(e);
+
+            const newbtn = document.querySelector('button').cloneNode(true);
+            newbtn.innerText = "Fetch Again";
+            document.getElementById('results').appendChild(newbtn);
+        }
+    </script>
+</body>
+
+</html>
