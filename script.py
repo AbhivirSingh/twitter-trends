@@ -39,12 +39,19 @@ def fetch_twitter_trends(i):
         WebDriverWait(driver,60).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "input.r-homxoj"))
         )
-        elem = driver.find_element(By.CSS_SELECTOR, "input.r-homxoj")
-        elem.send_keys(config.twitter_username)
-        elem.send_keys(Keys.RETURN)
-        WebDriverWait(driver,10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "input.r-homxoj"))
-        )
+
+
+
+        # Use the below section, only if you have signed multiple times and now twitter.com is asking for username
+
+        # elem = driver.find_element(By.CSS_SELECTOR, "input.r-homxoj")
+        # elem.send_keys(config.twitter_username)
+        # elem.send_keys(Keys.RETURN)
+        # WebDriverWait(driver,10).until(
+        #     EC.presence_of_element_located((By.CSS_SELECTOR, "input.r-homxoj"))
+        # )
+
+        
         elem = driver.find_element(By.CSS_SELECTOR, "input.r-homxoj")
         elem.send_keys(config.twitter_password)
         elem.send_keys(Keys.RETURN)
