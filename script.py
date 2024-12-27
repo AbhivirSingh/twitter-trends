@@ -16,7 +16,13 @@ db = client["twitter_trends"]
 collection = db["trends"]
 
 def fetch_twitter_trends(i):
+
     PROXYMESH_URL = f"http://{config.proxy_username}:{config.proxy_password}@{config.ips[i%len(config.ips)]}"
+
+    # Use the below section, only if you are encountering ERR_NO_SUPPORTED_PROXIES error and enter proxy_username and proxy_password manually
+    # PROXYMESH_URL=f"http://{config.ips[i%len(config.ips)]}"
+
+
     options = webdriver.ChromeOptions()
     proxy = Proxy()
     proxy.proxy_type = ProxyType.MANUAL
@@ -51,7 +57,7 @@ def fetch_twitter_trends(i):
         #     EC.presence_of_element_located((By.CSS_SELECTOR, "input.r-homxoj"))
         # )
 
-        
+
         elem = driver.find_element(By.CSS_SELECTOR, "input.r-homxoj")
         elem.send_keys(config.twitter_password)
         elem.send_keys(Keys.RETURN)
